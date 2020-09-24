@@ -9,26 +9,26 @@
 [ext_resource path="res://Assets/confetti.png" type="Texture" id=7]
 [ext_resource path="res://Assets/bubble.png" type="Texture" id=8]
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="Curve" id=14]
+[sub_resource type="Curve" id=16]
 min_value = -1.0
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, -1 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0.0314465, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.493711, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, -1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=15]
-curve = SubResource( 14 )
+[sub_resource type="CurveTexture" id=17]
+curve = SubResource( 16 )
 
-[sub_resource type="Curve" id=11]
+[sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=12]
-curve = SubResource( 11 )
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticlesMaterial" id=7]
 flag_disable_z = true
 spread = 75.0
 gravity = Vector3( 0, 98, 0 )
@@ -42,36 +42,37 @@ radial_accel = 100.0
 radial_accel_random = 1.0
 scale = 0.25
 scale_random = 0.5
-scale_curve = SubResource( 12 )
-color_ramp = SubResource( 10 )
-hue_variation_random = 1.0
-hue_variation_curve = SubResource( 15 )
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 2 )
+hue_variation = 0.1
+hue_variation_random = 0.5
+hue_variation_curve = SubResource( 17 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 50, 10 )
 
-[sub_resource type="Curve" id=7]
+[sub_resource type="Curve" id=9]
 min_value = -360.0
 max_value = 360.0
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, -360 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=11]
 offsets = PoolRealArray( 0, 0.451429, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=13]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.497436, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
+[sub_resource type="CurveTexture" id=14]
+curve = SubResource( 13 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=15]
 flag_disable_z = true
 direction = Vector3( 0, -1, 0 )
 spread = 60.0
@@ -83,11 +84,13 @@ angular_velocity_random = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 angle_random = 0.5
-angle_curve = SubResource( 8 )
+angle_curve = SubResource( 10 )
 scale = 0.5
 scale_random = 0.5
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+scale_curve = SubResource( 14 )
+color_ramp = SubResource( 12 )
+hue_variation = 0.7
+hue_variation_random = 0.25
 
 [node name="Game" type="Node2D"]
 
@@ -110,7 +113,7 @@ polygon = PoolVector2Array( 0, 0, 0, 768, 1024, 768, 1024, 0, 64, 0, 64, -64, 10
 emitting = false
 lifetime = 0.4
 one_shot = true
-process_material = SubResource( 13 )
+process_material = SubResource( 7 )
 texture = ExtResource( 8 )
 
 [node name="Bricks" type="Node2D" parent="."]
@@ -131,7 +134,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle_Container/Paddle"]
 position = Vector2( 50, 10 )
-shape = SubResource( 1 )
+shape = SubResource( 8 )
 
 [node name="Particles2D" type="Particles2D" parent="Paddle_Container"]
 position = Vector2( 507, 700 )
@@ -139,7 +142,7 @@ emitting = false
 amount = 6
 lifetime = 0.4
 one_shot = true
-process_material = SubResource( 6 )
+process_material = SubResource( 15 )
 texture = ExtResource( 7 )
 
 [node name="Ball_Container" type="Node2D" parent="."]
@@ -164,10 +167,10 @@ __meta__ = {
 }
 
 [node name="Background" type="ColorRect" parent="HUD/Menu"]
-margin_left = -13.0
-margin_top = -13.0
+margin_left = -10.0
+margin_top = -10.0
 margin_right = 275.0
-margin_bottom = 784.0
+margin_bottom = 778.0
 color = Color( 0.286275, 0.313726, 0.341176, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -199,27 +202,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Particle_Paddle" type="CheckBox" parent="HUD/Menu/Particles"]
-text = "Particle Paddle"
-
-[node name="Particle_Walls" type="CheckBox" parent="HUD/Menu/Particles"]
-margin_top = 30.0
-text = "Particle Walls"
-
-[node name="Particle_Blocks" type="CheckBox" parent="HUD/Menu/Particles"]
-margin_top = 60.0
-text = "Particle Blocks"
+[node name="Particles" type="CheckBox" parent="HUD/Menu/Particles"]
+text = "Particles"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Blocks" type="Control" parent="HUD/Menu"]
-margin_top = 145.0
+margin_left = 10.0
+margin_top = 85.0
 margin_bottom = 145.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Blocks_Appear" type="CheckBox" parent="HUD/Menu/Blocks"]
-margin_left = 10.0
-margin_top = 10.0
 margin_right = 136.419
 margin_bottom = 36.4193
 text = "Blocks Appear"
@@ -228,8 +225,7 @@ __meta__ = {
 }
 
 [node name="Blocks_Fall" type="CheckBox" parent="HUD/Menu/Blocks"]
-margin_left = 10.0
-margin_top = 43.0
+margin_top = 35.0
 margin_right = 134.0
 margin_bottom = 67.0
 text = "Blocks Fall"
@@ -238,7 +234,6 @@ __meta__ = {
 }
 
 [node name="Blocks_Fade" type="CheckBox" parent="HUD/Menu/Blocks"]
-margin_left = 10.0
 margin_top = 70.0
 margin_right = 134.0
 margin_bottom = 104.0
@@ -248,14 +243,13 @@ __meta__ = {
 }
 
 [node name="Blocks_Crack" type="CheckBox" parent="HUD/Menu/Blocks"]
-margin_left = 10.0
 margin_top = 100.0
 margin_right = 165.0
 margin_bottom = 139.0
 text = "Blocks Crack"
 
 [node name="Ball" type="Control" parent="HUD/Menu"]
-margin_top = 310.0
+margin_top = 245.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -279,12 +273,32 @@ __meta__ = {
 }
 
 [node name="Paddle" type="Control" parent="HUD/Menu"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 10.0
+margin_top = 305.0
+margin_right = 10.0
+margin_bottom = 365.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Paddle_Appear" type="CheckBox" parent="HUD/Menu/Paddle"]
+margin_right = 136.419
+margin_bottom = 36.4193
+text = "Paddle Appears"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Paddle_Stretch" type="CheckBox" parent="HUD/Menu/Paddle"]
+margin_top = 35.0
+margin_right = 134.0
+margin_bottom = 67.0
+text = "Paddle Stretches"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Audio" type="Control" parent="HUD/Menu"]
-margin_right = 40.0
-margin_bottom = 40.0
 
 [node name="Reset" type="Button" parent="HUD/Menu"]
 margin_left = 30.0
@@ -303,8 +317,6 @@ margin_right = 110.0
 margin_bottom = 740.0
 text = "Quit"
 [connection signal="toggled" from="HUD/Menu/Color/Color" to="HUD" method="_on_Color_toggled"]
-[connection signal="toggled" from="HUD/Menu/Particles/Particle_Paddle" to="HUD" method="_on_Particle_Paddle_toggled"]
-[connection signal="toggled" from="HUD/Menu/Particles/Particle_Walls" to="HUD" method="_on_Particle_Walls_toggled"]
-[connection signal="toggled" from="HUD/Menu/Particles/Particle_Blocks" to="HUD" method="_on_Particle_Blocks_toggled"]
+[connection signal="toggled" from="HUD/Menu/Particles/Particles" to="HUD" method="_on_Particles_toggled"]
 [connection signal="pressed" from="HUD/Menu/Reset" to="HUD" method="_on_Reset_pressed"]
 [connection signal="pressed" from="HUD/Menu/Quit" to="HUD" method="_on_Quit_pressed"]

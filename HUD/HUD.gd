@@ -28,20 +28,6 @@ func _on_Quit_pressed():
 	get_tree().quit()
 
 
-func _on_Particle_Paddle_toggled(button_pressed):
-	particle_paddle = false if particle_paddle else true
-	emit_signal("changed")
-
-
-func _on_Particle_Walls_toggled(button_pressed):
-	particle_walls = false if particle_walls else true
-	emit_signal("changed")
-
-
-func _on_Particle_Blocks_toggled(button_pressed):
-	particle_blocks = false if particle_blocks else true
-	emit_signal("changed")
-
 
 func _on_Color_toggled(button_pressed):
 	var t = $Menu/Color/Color.is_pressed()
@@ -51,3 +37,11 @@ func _on_Color_toggled(button_pressed):
 	color_background = t
 	emit_signal("changed")
 
+
+
+func _on_Particles_toggled(button_pressed):
+	var t = $Menu/Particles/Particles.is_pressed()
+	particle_paddle = t
+	particle_walls = t
+	particle_blocks = t
+	emit_signal("changed")
