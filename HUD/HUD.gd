@@ -9,10 +9,21 @@ var particle_paddle = false
 var particle_walls = false
 var particle_blocks = false
 
+var blocks_appear = false
+var blocks_fall = false
+var blocks_fade = false
+
+var screen_shake = 0
+
+var paddle_appear = false
+var paddle_stretch = false
+
+
 signal changed
 
 func _ready():
-	pass
+	$Menu/Color/Color.pressed = true
+	$Menu/Particles/Particles.pressed = true
 
 func reset_values():
 	emit_signal("changed")
@@ -21,6 +32,7 @@ func reset_values():
 func _on_Reset_pressed():
 	get_node("/root/Game/Bricks").start_bricks()
 	get_node("/root/Game/Ball_Container").start_ball()
+	get_node("/root/Game/Paddle_Container/Paddle").start_paddle()
 	reset_values()
 
 
@@ -30,18 +42,45 @@ func _on_Quit_pressed():
 
 
 func _on_Color_toggled(button_pressed):
-	var t = $Menu/Color/Color.is_pressed()
-	color_paddle = t
-	color_ball = t
-	color_blocks = t
-	color_background = t
+	color_paddle = button_pressed
+	color_ball = button_pressed
+	color_blocks = button_pressed
+	color_background = button_pressed
 	emit_signal("changed")
 
 
 
 func _on_Particles_toggled(button_pressed):
-	var t = $Menu/Particles/Particles.is_pressed()
-	particle_paddle = t
-	particle_walls = t
-	particle_blocks = t
+	particle_paddle = button_pressed
+	particle_walls = button_pressed
+	particle_blocks = button_pressed
 	emit_signal("changed")
+
+
+func _on_Blocks_Appear_toggled(button_pressed):
+	blocks_appear = button_pressed
+	emit_signal("changed")
+
+func _on_Blocks_Fall_toggled(button_pressed):
+	blocks_fall = button_pressed
+	emit_signal("changed")
+
+func _on_Blocks_Fade_toggled(button_pressed):
+	blocks_fade = button_pressed
+	emit_signal("changed")
+
+
+
+func _on_Screen_Shake_value_changed(value):
+	screen_shake = value
+	emit_signal("changed")
+
+
+func _on_Paddle_Appear_toggled(button_pressed):
+	paddle_appear = button_pressed
+	emit_signal("changed")
+
+func _on_Paddle_Stretch_toggled(button_pressed):
+	paddle_stretch = button_pressed
+	emit_signal("changed")
+

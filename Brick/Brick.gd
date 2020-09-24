@@ -1,8 +1,14 @@
 extends KinematicBody2D
 
 onready var HUD = get_node("/root/Game/HUD")
+onready var target_y = position.y
+
 var row = 0
 var col = 0
+
+export var appear_speed = 2
+export var fall_speed = 1
+
 var dying = false
 
 var colors = [
@@ -27,8 +33,19 @@ func _ready():
 	update_color()
 
 func _process(_delta):
-	if dying and not $Particles2D.emitting:
+	if dying and not $Particles2D.emitting and not $Tween.is_active() and not $Color_Tween.is_active():
 		queue_free()
+
+
+func start_brick():
+	if HUD.blocks_appear:
+		pass
+	else:
+		position = Vector2(position.x,target_y)
+
+
+
+
 
 func update_color():
 	if HUD.color_blocks:
@@ -50,6 +67,18 @@ func _on_HUD_changed():
 
 func die():
 	dying = true
-	$Color.color.a = 0
+	var target = Vector2(position.x, 768)
+	var target_color = $Color.color
+	target_color.a = 0
+	var timing = randf()*fall_speed + 1
+
+	if HUD.blocks_fall:
+		pass
+	if HUD.blocks_fade:
+		pass
+	if not HUD.blocks_fall and not HUD.blocks_fade:
+		$Color.color = target_color
+
+
 	collision_layer = 0
 	collision_mask = 0
