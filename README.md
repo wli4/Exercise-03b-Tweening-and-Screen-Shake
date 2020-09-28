@@ -21,6 +21,57 @@ The signals have all been connected, and the code should basicallly be in place.
 
 We will talk in detail in class how to complete this exercise. 
 
+In /Brick/Brick.gd, the start_brick() should be as follows:
+```
+func start_brick():
+	if HUD.blocks_appear:
+		var target_pos = position
+		var appear_duration = randf()*appear_speed + 1.0
+		position.y = -100
+		$Tween.interpolate_property(self, "position", position, target_pos, appear_duration, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
+		$Tween.start()
+	else:
+		position = Vector2(position.x,target_y)
+```
+
+die() should also be replaced with the following:
+```
+func die():
+	dying = true
+	var target_color = $Color.color.darkened(0.75)
+	target_color.a = 0
+	var fall_duration = randf()*fall_speed + 1
+
+	if HUD.blocks_fall:
+		var target_pos = position
+		target_pos.y = 1000
+		$Tween.interpolate_property(self, "position", position, target_pos, fall_duration, Tween.TRANS_CUBIC, Tween.EASE_IN)
+		$Tween.start()
+	if HUD.blocks_fade:
+		$Tween.interpolate_property($Color, "color", $Color.color, target_color, fall_duration-0.25, Tween.TRANS_EXPO, Tween.EASE_IN)
+		$Tween.start()
+	if not HUD.blocks_fall and not HUD.blocks_fade:
+		$Color.color = target_color
+
+	collision_layer = 0
+	collision_mask = 0
+```
+
+In /Paddle/Paddle.gd, in the `_physics_process(_delta):` function, replace the HUD.paddle_stretch condition with the following:
+```
+	if HUD.paddle_stretch:
+		var w = 1 + (distort.x * p)
+		var h = 1 - (1/distort.y * p)
+		change_size(w,h)
+```
+
+In /Ball/Ball.gd, the screen_shake(amount) function should now be:
+```
+func screen_shake(amount):
+	if HUD.screen_shake > 0:
+		camera.add_trauma(amount*HUD.screen_shake)
+```
+
 For the screen shake, replace the contents of Camera.gd with the following (also, add this to your Gists):
 ```
 extends Camera2D
