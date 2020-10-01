@@ -64,6 +64,16 @@ In /Paddle/Paddle.gd, in the `_physics_process(_delta):` function, replace the H
 		var h = 1 - (1/distort.y * p)
 		change_size(w,h)
 ```
+Also, the `start_paddle()` function should appear as follows:
+```
+func start_paddle():
+	if HUD.paddle_appear:
+		var target_pos = position
+		var appear_duration = 2.0
+		position.y = -100
+		$Tween.interpolate_property(self, "position", position, target_pos, appear_duration, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
+		$Tween.start()
+```
 
 In /Ball/Ball.gd, the screen_shake(amount) function should now be:
 ```
